@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+	<title>Tweetable version 1.6 | jQuery plugin</title>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" id="stylesheet" />
+	<link href="images/favicon.ico" rel="shortcut icon" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="author" content="Philip Beel theodin.co.uk" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+</head>
+<body>
+	<div id="info">
+		<img src="images/twitter_bird.png" alt="recent tweets" class="png" />
+		<p>Tweetable is a lightweight jQuery plugin which enables you to display your twitter feed on your site quickly and easily.</p>
+		<a href="http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.6.zip" class="button orange medium">Download tweetable V1.6</a>
+		<p>or <a href="http://theodin.co.uk/blog/jquery/tweetable-1-6-launched.html">return to blog</a></p>
+	</div>
+	<div id="tweets">
+	</div>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.tweetable.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#tweets').tweetable({username: 'philipbeel', time: true, limit: 10, replies: true, position: 'append'});
+		});
+	</script>
+	<!--[if IE 6]>
+	<script type='text/javascript' src='dd_belated_png.js'></script>
+	<script>DD_belatedPNG.fix('.png');</script>
+	<![endif]-->
+</body>
+</html>
