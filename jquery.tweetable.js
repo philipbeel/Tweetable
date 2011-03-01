@@ -29,8 +29,6 @@
 			//assign our initial vars
             var act = $(this);
             var $tweetList;
-            var tweetMonth = '';
-            var shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
             var api = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=";
             var count = "&count=";
             //do a JSON request to twitters API
@@ -50,21 +48,15 @@
                     } else {
                         $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + item.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
                     }
-                    //display the tiem of tweet if required
-                    if (defaults.time == true) {
-                    	for(var iterate=0; iterate<=12; iterate++) {
-                    		if(shortMonths[iterate] == item.created_at.substr(4, 3)) {
-								tweetMonth = iterate + 1;
-								if(tweetMonth < 10) {
-									tweetMonth = '0' + tweetMonth;
-								}
-	                   		} 	
-                    	}
-                        $('.tweet_link_' + i).append('<small> ' + item.created_at.substr(8, 2) + '/' + tweetMonth + '/' + item.created_at.substr(26,4) + ' ' + item.created_at.substr(11,8) + '</small>');
-                    }
+                    //display the time of tweet, if required
+					//using Date() to take advantage of local functions to simplify code and build upon later.
+                    if (defaults.time === true) {
+						var date = new Date(item.created_at);
+                    	$('.tweet_link_' + i).append(['<small>',date.getDate(),'/',date.getMonth(),'/',date.getFullYear(),' ',date.toLocaleTimeString(),'</small>'].join('')) // fast concatination is your friend
+					}
                 });
                 //close the unordered list
-               });
+             });
         });
     }
 })(jQuery);
