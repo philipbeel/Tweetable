@@ -52,7 +52,7 @@
 					//using Date() to take advantage of local functions to simplify code and build upon later.
                     if (defaults.time === true) {
 						var date = new Date(item.created_at);
-                    	$('.tweet_link_' + i).append(['<small>',date.getDate(),'/',date.getMonth(),'/',date.getFullYear(),' ',date.toLocaleTimeString(),'</small>'].join('')) // fast concatination is your friend
+                    	$('.tweet_link_' + i).append(['<small><a href="http://twitter.com/',item.user.screen_name,'/status/',item.id,'">',date.getDate(),'/',date.getMonth(),'/',date.getFullYear(),' ',date.toLocaleTimeString(),'</a></small>'].join('')) // fast concatination is your friend
 					}
                 });
                 //close the unordered list
