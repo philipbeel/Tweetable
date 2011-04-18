@@ -1,5 +1,5 @@
 /*
- * tweetable 1.6 - jQuery twitter feed generator plugin
+ * tweetable 1.7 - jQuery twitter feed generator plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) 
@@ -7,8 +7,13 @@
  *
  * With modifications from Philipp Robbel (http://www.robbel.com/) and Patrick DW (stackoverflow)
  * for IE compatibility.
- *
- * Revision: $Id: jquery.tweetable.js 2011-01-06 $ 
+ * 
+ * Modifications by Mike Walker (http://incredimike.com) for performance and added functionality:
+ *  - Fast string concatination using [array].join('') method
+ *  - date links to specific tweet
+ *  - added fuzzy date support if jquery.timeago.js plugin is present (http://timeago.yarp.com/)
+ * 
+ * Revision: $Id: jquery.tweetable.js 2011-04-18 $ 
  *
  */
 (function ($) {
@@ -52,7 +57,9 @@
 					//using Date() to take advantage of local functions to simplify code and build upon later.
                     if (defaults.time === true) {
 						var date = new Date(item.created_at);
-                    	$('.tweet_link_' + i).append(['<small><a href="http://twitter.com/',item.user.screen_name,'/status/',item.id,'">',date.getDate(),'/',date.getMonth(),'/',date.getFullYear(),' ',date.toLocaleTimeString(),'</a></small>'].join('')) // fast concatination is your friend
+						if (jQuery.timeago) { var date_text = jQuery.timeago(date) }
+						else { var date_text = [date.getDate(),'/',date.getMonth(),'/',date.getFullYear(),' ',date.toLocaleTimeString()].join(''); }
+                    	$('.tweet_link_' + i).append(['<small><a href="http://twitter.com/',item.user.screen_name,'/status/',item.id_str,'">',date_text,'</a></small>'].join('')) // fast concatination is your friend
 					}
                 });
                 //close the unordered list
