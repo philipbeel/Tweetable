@@ -21,9 +21,10 @@
     $.fn.tweetable = function (options) {
         //specify the plugins defauls
         var defaults = {
-            limit: 5, 						//number of tweets to show
+            limit: 5, 					//number of tweets to show
             username: 'philipbeel', 	//@username tweets to display
-            time: false, 					//display date
+			retweets: false,			//show retweets
+            time: false, 				//display date
             replies: false,				//filter out @replys
             position: 'append'			//append position
         };
@@ -36,8 +37,9 @@
             var $tweetList;
             var api = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=";
             var count = "&count=";
+			var rts = "&include_rts=";
             //do a JSON request to twitters API
-            $.getJSON(api + defaults.username + count + defaults.limit + "&callback=?", act, function (data) {
+            $.getJSON(api + defaults.username + count + defaults.limit + rts + defaults.retweets + "&callback=?", act, function (data) {
 				//loop through twitters response
                 $.each(data, function (i, item) {
 					//check for the first loop
