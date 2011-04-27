@@ -1,20 +1,20 @@
 /*
- * tweetable 1.7 - jQuery twitter feed generator plugin
+ * tweetable 1.8 - jQuery twitter feed generator plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) 
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
- * With modifications from Philipp Robbel (http://www.robbel.com/) and Patrick DW (stackoverflow)
- * for IE compatibility.
+ * With modifications from:
+ * Philipp Robbel (http://www.robbel.com/) - IE compatibility
+ * Patrick DW (stackoverflow) - IE compatibility
+ * Mike Walker (github.com/incredimike) - performance, fuzzy date support, UI modifications
+ * Raad Al-Rawi (github.com/raad) - retweet support
  * 
- * Modifications by Mike Walker (http://incredimike.com) for performance and added functionality:
- *  - Fast string concatination using [array].join('') method
- *  - date links to specific tweet
- *  - added fuzzy date support if jquery.timeago.js plugin is present (http://timeago.yarp.com/)
+ * Fuzzy date support (i.e. "3 days ago") requires jquery.timeago.js plugin available from:
+ *   http://github.com/rmm5t/jquery-timeago
  * 
- * Revision: $Id: jquery.tweetable.js 2011-04-18 $ 
- *
+ * Revision: $Id: jquery.tweetable.js 2011-04-26 $ 
  */
 (function ($) {
     //define the tweetable plugin
