@@ -18,7 +18,7 @@
         var defaults = {
             limit: 5, 						//number of tweets to show
             username: 'philipbeel', 	//@username tweets to display
-						user: false,				// display user
+						user: false,				  // display username in front of tweet
             time: false, 					//display date
             replies: false,				//filter out @replys
             position: 'append'			//append position
@@ -32,7 +32,7 @@
             var $tweetList;
             var tweetMonth = '';
             var shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-						var tweetUser = user ? '<span class="tweet_username">' + username + '</span>' : '';
+						var tweetUser = defaults.user ? '<span class="username">' + defaults.username + ": " + '</span>' : '';
             var api = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=";
             var count = "&count=";
 
@@ -52,7 +52,7 @@
                             $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweetUser + item.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2')+'</p></li>');
                         }
                     } else {
-                        $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + item.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
+                        $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweetUser + item.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
                     }
                     //display the tiem of tweet if required
                     if (defaults.time == true) {
