@@ -18,6 +18,7 @@
         var defaults = {
             limit: 5, 						//number of tweets to show
             username: 'philipbeel', 	//@username tweets to display
+						user: false,				// display user
             time: false, 					//display date
             replies: false,				//filter out @replys
             position: 'append'			//append position
@@ -31,8 +32,11 @@
             var $tweetList;
             var tweetMonth = '';
             var shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+						var tweetUser = user ? '<span class="tweet_username">' + username + '</span>' : '';
             var api = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=";
             var count = "&count=";
+
+						
             //do a JSON request to twitters API
             $.getJSON(api + defaults.username + count + defaults.limit + "&callback=?", act, function (data) {
 				//loop through twitters response
@@ -45,7 +49,7 @@
                     //handle @reply filtering if required
                     if (defaults.replies === false) {
                         if (item.in_reply_to_status_id === null) {
-                            $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + item.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2')+'</p></li>');
+                            $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweetUser + item.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2')+'</p></li>');
                         }
                     } else {
                         $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + item.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
