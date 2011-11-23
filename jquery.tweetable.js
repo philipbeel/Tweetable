@@ -1,5 +1,5 @@
 /*
- * tweetable 1.6 - jQuery twitter feed generator plugin
+ * tweetable 1.6.1 - jQuery twitter feed generator plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
