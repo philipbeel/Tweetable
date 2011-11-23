@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
-	<title>Tweetable version 1.6 | jQuery plugin</title>
+	<title>Tweetable version 1.6.1 | jQuery plugin</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen" id="stylesheet" />
 	<link href="images/favicon.ico" rel="shortcut icon" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -22,7 +22,7 @@
 	<script type="text/javascript" src="jquery.tweetable.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$('#tweets').tweetable({username: 'philipbeel', time: true, limit: 10, replies: true, position: 'append'});
+			$('#tweets').tweetable({username: 'philipbeel', time: true, limit: 10, replies: true, position: 'append', onComplete:function($ul){} });
 		});
 	</script>
 	<!--[if IE 6]>
