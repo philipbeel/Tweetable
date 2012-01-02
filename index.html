@@ -22,7 +22,16 @@
 	<script type="text/javascript" src="jquery.tweetable.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$('#tweets').tweetable({username: 'philipbeel', time: true, limit: 10, replies: true, position: 'append', onComplete:function($ul){} });
+			$('#tweets').tweetable({
+				username: 'philipbeel', 
+				time: true,
+				rotate: true,
+				speed: 4000, 
+				limit: 10, 
+				replies: true, 
+				position: 'append', 
+				onComplete:function($ul){} 
+			});
 		});
 	</script>
 	<!--[if IE 6]>
