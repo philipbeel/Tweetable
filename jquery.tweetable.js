@@ -19,6 +19,8 @@
             limit: 5,                       //number of tweets to show
             username: 'philipbeel',         //@username tweets to display
             time: false,                    //display date
+			rotate: false,
+			speed: 5000,
             replies: false,                 //filter out @replys
             position: 'append',             //append position
             onComplete: function($ul) {}
@@ -59,9 +61,31 @@
                         }
                         $('.tweet_link_' + i).prepend('<p><small> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</small></p>');
                     }
-                });
-                //close the unordered list
-                defaults.onComplete($tweetList);
+					
+                });//close the unordered list
+				
+				//rotate tweets if required
+				if ( defaults.rotate == true ) {
+					var element = $tweetList.find('li'),
+					length = element.length,
+					current = 0,
+					timeout = defaults.speed;				
+					function changeTweets() {
+					element.eq(current++).fadeOut(300, function(){
+						if(current === length){
+							current = 0;
+						}
+						
+						element.eq(current).fadeIn(300);
+					});		
+					setTimeout(changeTweets, timeout);
+					}
+					element.slice(1).hide();
+					setTimeout(changeTweets, timeout);
+				}		
+                
+				defaults.onComplete($tweetList);
+				
             });
         });
     }
