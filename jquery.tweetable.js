@@ -8,50 +8,54 @@
  * With modifications from Philipp Robbel (http://www.robbel.com/) and Patrick DW (stackoverflow)
  * for IE compatibility.
  *
- * Revision: $Id: jquery.tweetable.js 2011-01-06 $
+ * Revision: $Id: jquery.tweetable.js 2012-06-22 $ 
  *
  */
 (function ($) {
     //define the tweetable plugin
-    $.fn.tweetable = function (options) {
+    jQuery.fn.tweetable = function (options) {
         //specify the plugins defauls
         var defaults = {
-            limit: 5,                       //number of tweets to show
-            username: 'philipbeel',         //@username tweets to display
-            time: false,                    //display date
-			rotate: false,
-			speed: 5000,
-            replies: false,                 //filter out @replys
-            position: 'append',             //append position
+            limit: 5,                       // Number of tweets to show
+            username: 'philipbeel',         // @username tweets to display
+            time: false,                    // Display date
+			rotate: false,                  // Rotate tweets
+			speed: 5000,                    // Speed of rotation
+            replies: false,                 // Filter out @replys
+            position: 'append',             // Append position
             onComplete: function($ul) {}
         };
         //overwrite the defaults
-        var options = $.extend(defaults, options);
+        var options = jQuery.extend(defaults, options);
         //loop through each instance
         return this.each(function (options) {
-            //assign our initial vars
-            var act = $(this);
-            var $tweetList = $('<ul class="tweetList">')[defaults.position.toLowerCase() + 'To'](act);
-            var tweetMonth = '';
-            var shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-            var api = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=";
-            var count = "&count=";
+
+            var act = jQuery(this)
+            ,   tweetList = jQuery('<ul class="tweetList">')[defaults.position.toLowerCase() + 'To'](act)
+            ,   tweetMonth = ''
+            ,   shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+            ,   api = "http://api.twitter.com/1/statuses/user_timeline.json?suppress_response_codes&screen_name="
+            ,   count = "&count="
+            ,   ctr
+            ,   iterate
+            ,   element;
+
             //do a JSON request to twitters API
-            $.getJSON(api + defaults.username + count + defaults.limit + "&callback=?", act, function (data) {
-                var ctr = 0;
+            jQuery.getJSON(api + defaults.username + count + defaults.limit + "&callback=?", act, function (data) {
+                ctr = 0;
                 //loop through twitters response
-                $.each(data, function (i, tweet) {
+                jQuery.each(data, function (i, tweet) {
                     //handle @reply filtering if required
-                    if (defaults.replies === false && tweet.in_reply_to_status_id != null)
+                    if (defaults.replies === false && tweet.in_reply_to_status_id !== null)
                         return;
                     
                     i = ctr++;
                     
-                    $tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweet.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
+                    tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweet.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
                     
                     //display the time of tweet if required
                     if (defaults.time == true) {
-                        for(var iterate=0; iterate<=12; iterate++) {
+                        for(iterate=0; iterate<=12; iterate++) {
                             if(shortMonths[iterate] == tweet.created_at.substr(4, 3)) {
                                 tweetMonth = iterate + 1;
                                 if(tweetMonth < 10) {
@@ -59,17 +63,20 @@
                                 }
                             }
                         }
-                        $('.tweet_link_' + i).prepend('<p><small> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</small></p>');
+                        jQuery('.tweet_link_' + i).prepend('<p><small> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</small></p>');
                     }
 					
-                });//close the unordered list
+                }).success(function() { 
+
+                });
 				
 				//rotate tweets if required
-				if ( defaults.rotate == true ) {
-					var element = $tweetList.find('li'),
+				if ( defaults.rotate === true ) {
+					element = tweetList.find('li'),
 					length = element.length,
 					current = 0,
-					timeout = defaults.speed;				
+					timeout = defaults.speed;	
+
 					function changeTweets() {
 					element.eq(current++).fadeOut(300, function(){
 						if(current === length){
@@ -84,7 +91,7 @@
 					setTimeout(changeTweets, timeout);
 				}		
                 
-				defaults.onComplete($tweetList);
+				defaults.onComplete(tweetList);
 				
             });
         });
