@@ -40,6 +40,8 @@ small {font-style:italic; }
 	line-height:150%;
 }
 
+#tweets li .timestamp {text-align:right;}
+
 #tweets li.tweet_content_0 {
 	border-top:0px none;
 }
