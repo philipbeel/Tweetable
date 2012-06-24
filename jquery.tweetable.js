@@ -11,7 +11,7 @@
  * Revision: $Id: jquery.tweetable.js 2012-06-22 $ 
  *
  */
-(function ($) {
+(function($) {
 
     jQuery.fn.tweetable = function (options) {
         
@@ -24,6 +24,7 @@
 			speed: 5000,                    // Speed of rotation
             replies: false,                 // Filter out @replys
             position: 'append',             // Append position
+            failed: "No tweets unavailable",// Twitter stream unavailable text
             onComplete: function($ul) {}
         };
 
@@ -38,13 +39,23 @@
             ,   api = "https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&suppress_response_codes=true&screen_name="
             ,   count = "&count="
             ,   replies = "&exclude_replies="
+            ,   twitterError
             ,   tweetMonth
             ,   iterate
             ,   element;
 
             // Fire JSON request to twitter API
             jQuery.getJSON(api + defaults.username + count + (defaults.limit + 5) + replies + defaults.replies + "&callback=?", act, function (data) {
-                
+
+                // Check for tweet errors 
+                twitterError = data && data.error || null;
+
+                if(twitterError)
+                {
+                    tweetList.append('<li class="tweet_content"><p class="tweet_link">'+ defaults.failed +'</p></li>');
+                    return;
+                }
+
                 // Loop through twitters response
                 jQuery.each(data, function (i, tweet) {
 
@@ -66,12 +77,12 @@
                         jQuery('.tweet_link_' + i).append('<p class="timestamp"><small> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</small></p>');
                     }
                 });
-				
+
 				// Display one tweet and retweet
 				if ( defaults.rotate === true ) {
 
 					var listItem = tweetList.find('li')
-                    ,   listLength = element.length || null
+                    ,   listLength = listItem.length || null
                     ,   current = 0
                     ,   timeout = defaults.speed;	
 
@@ -80,7 +91,7 @@
 
                     // Rotate the tweets one at a time
                     function rotateTweets() {
-                       element.eq(current++).fadeOut(400, function(){
+                       listItem.eq(current++).fadeOut(400, function(){
                             current = (current === listLength) ? 0 : current;
                             listItem.eq(current).fadeIn(400);
                        });

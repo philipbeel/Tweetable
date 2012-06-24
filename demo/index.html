@@ -25,11 +25,12 @@
 			$('#tweets').tweetable({
 				username: 'philipbeel', 
 				time: true,
-				rotate: false,
+				rotate: true,
 				speed: 4000, 
 				limit: 5,
 				replies: false,
-				position: 'append', 
+				position: 'append',
+				failed: "Sorry, twitter is currently unavailable for this user.",
 				onComplete:function($ul){} 
 			});
 		});
