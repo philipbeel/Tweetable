@@ -47,7 +47,7 @@
             // Fire JSON request to twitter API
             jQuery.getJSON(api + defaults.username + count + (defaults.limit + 5) + replies + defaults.replies + "&callback=?", act, function (data) {
 
-                // Check for tweet errors 
+                // Check for response error 
                 twitterError = data && data.error || null;
 
                 if(twitterError)
