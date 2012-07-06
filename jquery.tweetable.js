@@ -24,7 +24,7 @@
 			speed: 5000,                    // Speed of rotation
             replies: false,                 // Filter out @replys
             position: 'append',             // Append position
-            failed: "No tweets unavailable",// Twitter stream unavailable text
+            failed: "No tweets available",  // Twitter stream unavailable text
             onComplete: function($ul) {}
         };
 
