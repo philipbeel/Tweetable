@@ -30,10 +30,14 @@ Initiate tweetable on your selected element, pass in the twitter username.
 ### Plugin parameters
 
 <blockquote>
-	limit: 5,                         //number of tweets to show
-	username: 'philipbeel',     //@username tweets to display
-	time: false,                     //display date
-	replies: false,                //filter out @replys
+	limit: {Iteger},             // Number of tweets to show <br/>
+	username: {String},     	 // @username tweets to display <br/>
+	time: {Boolean},             // Display date <br/>
+	replies: {Boolean},          // Filter out @replys if true <br/>
+	failed: {String}			 // Text to display when API returns no results <br/>
+	rotate: {Boolean}			 // Displays only one tweet at a time <br/>
+	speed: {Iteger}				 // Speed in milliseconds to display each tweet if rotating <br/>
+	append: {String}			 // Appended position <br/>
 </blockquote>
 
 
