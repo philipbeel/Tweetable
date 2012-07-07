@@ -33,6 +33,7 @@ Initiate tweetable on your selected element, pass in the twitter username.
 	limit: {Iteger},             // Number of tweets to show <br/>
 	username: {String},     	 // @username tweets to display <br/>
 	time: {Boolean},             // Display date <br/>
+	retweets: {Boolean},         // Discount retweets false<br/>
 	replies: {Boolean},          // Filter out @replys if true <br/>
 	failed: {String}			 // Text to display when API returns no results <br/>
 	rotate: {Boolean}			 // Displays only one tweet at a time <br/>

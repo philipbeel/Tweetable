@@ -26,6 +26,7 @@
             position: 'append',             // Append position
             failed: "No tweets available",  // Twitter stream unavailable text
             html5: false,                   // HTML5 Support
+            retweets: false,                // Show retweets
             onComplete: function($ul) {}    // On complete callback
         };
 
@@ -40,13 +41,14 @@
             ,   api = "https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&suppress_response_codes=true&screen_name="
             ,   count = "&count="
             ,   replies = "&exclude_replies="
+            ,   rts = "&include_rts="
             ,   twitterError
             ,   tweetMonth
             ,   iterate
             ,   element;
 
             // Fire JSON request to twitter API
-            jQuery.getJSON(api + defaults.username + count + (defaults.limit + 5) + replies + defaults.replies + "&callback=?", act, function (data) {
+            jQuery.getJSON(api + defaults.username + count + (defaults.limit + 5) + replies + defaults.replies + rts + defaults.retweets + "&callback=?", act, function (data) {
 
                 // Check for response error 
                 twitterError = data && data.error || null;
