@@ -38,6 +38,7 @@ Initiate tweetable on your selected element, pass in the twitter username.
 	rotate: {Boolean}			 // Displays only one tweet at a time <br/>
 	speed: {Iteger}				 // Speed in milliseconds to display each tweet if rotating <br/>
 	append: {String}			 // Appended position <br/>
+	HTML5: {Boolean}			 // Confirm if HTML5 is supported (timeago support) <br/>
 </blockquote>
 
 
