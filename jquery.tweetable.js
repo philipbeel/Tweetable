@@ -1,5 +1,5 @@
 /*
- * tweetable 1.6.1 - jQuery twitter feed generator plugin
+ * tweetable 1.7.0 - jQuery twitter feed generator plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
@@ -8,7 +8,7 @@
  * With modifications from Philipp Robbel (http://www.robbel.com/) and Patrick DW (stackoverflow)
  * for IE compatibility.
  *
- * Revision: $Id: jquery.tweetable.js 2012-06-22 $ 
+ * Revision: $Id: jquery.tweetable.js 2012-07-07 $ 
  *
  */
 (function($) {
@@ -25,8 +25,8 @@
             replies: false,                 // Filter out @replys
             position: 'append',             // Append position
             failed: "No tweets available",  // Twitter stream unavailable text
-            onComplete: function($ul) {},
-            html5: false
+            html5: false,                   // HTML5 Support
+            onComplete: function($ul) {}    // On complete callback
         };
 
         var options = jQuery.extend(defaults, options);
