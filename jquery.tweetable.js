@@ -8,7 +8,7 @@
  * With modifications from Philipp Robbel (http://www.robbel.com/) and Patrick DW (stackoverflow)
  * for IE compatibility.
  *
- * Revision: $Id: jquery.tweetable.js 2012-06-22 $ 
+ * Revision: $Id: jquery.tweetable.js 2012-07-07 $ 
  *
  */
 (function($) {
@@ -25,7 +25,8 @@
             replies: false,                 // Filter out @replys
             position: 'append',             // Append position
             failed: "No tweets available",  // Twitter stream unavailable text
-            onComplete: function($ul) {}
+            html5: false,                   // HTML5 Support
+            onComplete: function($ul) {}    // On complete callback
         };
 
         var options = jQuery.extend(defaults, options);
@@ -74,7 +75,13 @@
                                     tweetMonth = '0' + tweetMonth;
                             }
                         }
-                        jQuery('.tweet_link_' + i).append('<p class="timestamp"><small> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</small></p>');
+                        // Create ISO 8601 formatted date
+                        var iso8601 = tweet.created_at.substr(26,4) + '-' + tweetMonth + '-' + tweet.created_at.substr(8, 2) + 'T' + tweet.created_at.substr(11,8) + 'Z';  
+                        jQuery('.tweet_link_' + i).append('<p class="timestamp"><'
+                            + ((defaults.html5) ? 'time datetime="' + iso8601 + '"' : 'small') 
+                            + '> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</' 
+                            + ((defaults.html5) ? 'time' : 'small') + 
+                            '></p>');
                     }
                 });
 
