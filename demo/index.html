@@ -20,8 +20,7 @@
 	</div>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script type="text/javascript" src="../jquery.tweetable.js"></script>
-	<script type="text/javascript" src="https://raw.github.com/rmm5t/jquery-timeago/master/jquery.timeago.js"></script>
-        <script type="text/javascript">
+	<script type="text/javascript">
 		$(function(){
 			$('#tweets').tweetable({
 				username: 'philipbeel', 
@@ -32,18 +31,9 @@
 				replies: false,
 				position: 'append',
 				failed: "Sorry, twitter is currently unavailable for this user.",
-				onComplete:function($ul){
-                                
-                                    $('small.timeago').timeago();
-
-                                
-                                }
-
-                            });
-
-                                                    
+				onComplete:function($ul){} 
+			});
 		});
-
 	</script>
 	<!--[if IE 6]>
 	<script type='text/javascript' src='dd_belated_png.js'></script>
