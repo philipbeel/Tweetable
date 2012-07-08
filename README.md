@@ -1,11 +1,11 @@
 Tweetable - A jQuery plugin for displaying twitter feeds
 ========================================================
 
-GitHub  : https://github.com/philipbeel/Tweetable
-Demo    : http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.6/index.html
-Website : http://theodin.co.uk
-Email   : contact@theodin.co.uk
-Twitter : @philipbeel
+GitHub  : https://github.com/philipbeel/Tweetable<br/>
+Demo    : http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.6/index.html<br/>
+Website : http://theodin.co.uk<br/>
+Email   : contact@theodin.co.uk<br/>
+Twitter : @philipbeel<br/>
 
 ### Descrpition
 Tweetable is a lightweight jQuery plugin that enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys as well as links being dynamically generated for ease of use.
