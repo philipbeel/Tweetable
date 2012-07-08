@@ -1,5 +1,5 @@
 /*
- * tweetable 1.7.0 - jQuery twitter feed generator plugin
+ * tweetable 1.7.0 - jQuery twitter feed plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
@@ -8,14 +8,13 @@
  * With modifications from Philipp Robbel (http://www.robbel.com/) and Patrick DW (stackoverflow)
  * for IE compatibility.
  *
- * Revision: $Id: jquery.tweetable.js 2012-07-07 $ 
+ * Revision: $Id: jquery.tweetable.js 2012-07-08 $ 
  *
  */
 (function($) {
 
     jQuery.fn.tweetable = function (options) {
         
-        // Specify tweetable defaults
         var defaults = {
             limit: 5,                       // Number of tweets to show
             username: 'philipbeel',         // @username tweets to display
@@ -44,6 +43,7 @@
             ,   rts = "&include_rts="
             ,   twitterError
             ,   tweetMonth
+            ,   tweetMonthInt
             ,   iterate
             ,   element;
 
@@ -59,10 +59,10 @@
                     return;
                 }
 
-                // Loop through twitters response
+                // Loop through twitter API response
                 jQuery.each(data, function (i, tweet) {
 
-                    // Output tweets if less that limit
+                    // Output tweets if less than limit
                     if(i >= defaults.limit)
                         return;
 
@@ -72,9 +72,8 @@
                     if (defaults.time === true) {
                         for(iterate=0; iterate<=12; iterate++) {
                             if(shortMonths[iterate] === tweet.created_at.substr(4, 3)) {
-                                tweetMonth = iterate + 1;
-                                if(tweetMonth < 10)
-                                    tweetMonth = '0' + tweetMonth;
+                                tweetMonthInt = iterate + 1;
+                                tweetMonth = (tweetMonthInt < 10) ? '0' + tweetMonthInt : tweetMonthInt ;
                             }
                         }
                         // Create ISO 8601 formatted date
@@ -105,7 +104,10 @@
                             listItem.eq(current).fadeIn(400);
                        });
                     }
+                    //Hide all but the first tweet
                     listItem.slice(1).hide();
+
+                    //Rotate tweets at specified interval
                     setInterval(rotateTweets, timeout);
 				}		
 				defaults.onComplete(tweetList);
