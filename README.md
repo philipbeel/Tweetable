@@ -2,13 +2,9 @@ Tweetable - A jQuery plugin for displaying twitter feeds
 ========================================================
 
 GitHub  : https://github.com/philipbeel/Tweetable
-
 Demo    : http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.6/index.html
-
 Website : http://theodin.co.uk
-
 Email   : contact@theodin.co.uk
-
 Twitter : @philipbeel
 
 ### Descrpition
@@ -28,7 +24,15 @@ Initiate tweetable on your selected element, pass in the twitter username.
 	$('#tweets').tweetable({username: 'philipbeel'});
 
 ### TimeAgo plugin support
-Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for displaying how long ago a tweet was posted.
+Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for displaying how long ago a tweet was posted. This can be achieved like so:
+
+	$('#tweets').tweetable({
+		html5: true,
+		onComplete:function($ul){
+			$('time').timeago();
+		}
+	});
+
 
 ### Plugin parameters
 
