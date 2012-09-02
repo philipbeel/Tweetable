@@ -13,105 +13,106 @@
  */
 (function($) {
 
-    jQuery.fn.tweetable = function (options) {
-        
-        var defaults = {
-            limit: 5,                       // Number of tweets to show
-            username: 'philipbeel',         // @username tweets to display
-            time: false,                    // Display date
-			rotate: false,                  // Rotate tweets
-			speed: 5000,                    // Speed of rotation
-            replies: false,                 // Filter out @replys
-            position: 'append',             // Append position
-            failed: "No tweets available",  // Twitter stream unavailable text
-            html5: false,                   // HTML5 Support
-            retweets: false,                // Show retweets
-            onComplete: function($ul) {}    // On complete callback
-        };
+	jQuery.fn.tweetable = function (opts) {
+		opts = $.extend({}, $.fn.tweetable.options, opts);
 
-        var options = jQuery.extend(defaults, options);
-        
-        // Loop through each instance
-        return this.each(function (options) {
+		// Loop through each instance
+		return this.each(function () {
 
-            var act = jQuery(this)
-            ,   tweetList = jQuery('<ul class="tweetList">')[defaults.position.toLowerCase() + 'To'](act)
-            ,   shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-            ,   api = "https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&suppress_response_codes=true&screen_name="
-            ,   count = "&count="
-            ,   replies = "&exclude_replies="
-            ,   rts = "&include_rts="
-            ,   twitterError
-            ,   tweetMonth
-            ,   tweetMonthInt
-            ,   iterate
-            ,   element;
+			var act = jQuery(this)
+			,   tweetList = jQuery('<ul class="tweetList">')[opts.position.toLowerCase() + 'To'](act)
+			,   shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+			,   api = "https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&suppress_response_codes=true&screen_name="
+			,   count = "&count="
+			,   replies = "&exclude_replies="
+			,   rts = "&include_rts="
+			,   twitterError
+			,   tweetMonth
+			,   tweetMonthInt
+			,   iterate
+			,   element;
 
-            // Fire JSON request to twitter API
-            jQuery.getJSON(api + defaults.username + count + (defaults.limit + 5) + replies + defaults.replies + rts + defaults.retweets + "&callback=?", act, function (data) {
+			// Fire JSON request to twitter API
+			jQuery.getJSON(api + opts.username + count + (opts.limit + 5) + replies + opts.replies + rts + opts.retweets + "&callback=?", act, function (data) {
 
-                // Check for response error 
-                twitterError = data && data.error || null;
+				// Check for response error 
+				twitterError = data && data.error || null;
 
-                if(twitterError)
-                {
-                    tweetList.append('<li class="tweet_content"><p class="tweet_link">'+ defaults.failed +'</p></li>');
-                    return;
-                }
+				if(twitterError)
+				{
+					tweetList.append('<li class="tweet_content"><p class="tweet_link">'+ opts.failed +'</p></li>');
+					return;
+				}
 
-                // Loop through twitter API response
-                jQuery.each(data, function (i, tweet) {
+				// Loop through twitter API response
+				jQuery.each(data, function (i, tweet) {
 
-                    // Output tweets if less than limit
-                    if(i >= defaults.limit)
-                        return;
+					// Output tweets if less than limit
+					if(i >= opts.limit)
+						return;
 
-                    tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweet.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
-                    
-                    // Display the time of tweet if required
-                    if (defaults.time === true) {
-                        for(iterate=0; iterate<=12; iterate++) {
-                            if(shortMonths[iterate] === tweet.created_at.substr(4, 3)) {
-                                tweetMonthInt = iterate + 1;
-                                tweetMonth = (tweetMonthInt < 10) ? '0' + tweetMonthInt : tweetMonthInt ;
-                            }
-                        }
-                        // Create ISO 8601 formatted date
-                        var iso8601 = tweet.created_at.substr(26,4) + '-' + tweetMonth + '-' + tweet.created_at.substr(8, 2) + 'T' + tweet.created_at.substr(11,8) + 'Z';  
-                        jQuery('.tweet_link_' + i).append('<p class="timestamp"><'
-                            + ((defaults.html5) ? 'time datetime="' + iso8601 + '"' : 'small') 
-                            + '> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</' 
-                            + ((defaults.html5) ? 'time' : 'small') + 
-                            '></p>');
-                    }
-                });
+					tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweet.text.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2') + '</p></li>');
+					
+					// Display the time of tweet if required
+					if (opts.time === true) {
+						for(iterate=0; iterate<=12; iterate++) {
+							if(shortMonths[iterate] === tweet.created_at.substr(4, 3)) {
+								tweetMonthInt = iterate + 1;
+								tweetMonth = (tweetMonthInt < 10) ? '0' + tweetMonthInt : tweetMonthInt ;
+							}
+						}
+						// Create ISO 8601 formatted date
+						var iso8601 = tweet.created_at.substr(26,4) + '-' + tweetMonth + '-' + tweet.created_at.substr(8, 2) + 'T' + tweet.created_at.substr(11,8) + 'Z';  
+						jQuery('.tweet_link_' + i).append('<p class="timestamp"><'
+							+ ((opts.html5) ? 'time datetime="' + iso8601 + '"' : 'small') 
+							+ '> ' + tweet.created_at.substr(8, 2) + '/' + tweetMonth + '/' + tweet.created_at.substr(26,4) + ', ' + tweet.created_at.substr(11,5) + '</' 
+							+ ((opts.html5) ? 'time' : 'small') + 
+							'></p>');
+					}
+				});
 
 				// Display one tweet and retweet
-				if ( defaults.rotate === true ) {
+				if ( opts.rotate === true ) {
 
 					var listItem = tweetList.find('li')
-                    ,   listLength = listItem.length || null
-                    ,   current = 0
-                    ,   timeout = defaults.speed;	
+					,   listLength = listItem.length || null
+					,   current = 0
+					,   timeout = opts.speed;	
 
-                    if(!listLength)
-                        return
+					if(!listLength)
+						return
 
-                    // Rotate the tweets one at a time
-                    function rotateTweets() {
-                       listItem.eq(current++).fadeOut(400, function(){
-                            current = (current === listLength) ? 0 : current;
-                            listItem.eq(current).fadeIn(400);
-                       });
-                    }
-                    //Hide all but the first tweet
-                    listItem.slice(1).hide();
+					// Rotate the tweets one at a time
+					function rotateTweets() {
+					   listItem.eq(current++).fadeOut(400, function(){
+							current = (current === listLength) ? 0 : current;
+							listItem.eq(current).fadeIn(400);
+					   });
+					}
+					//Hide all but the first tweet
+					listItem.slice(1).hide();
 
-                    //Rotate tweets at specified interval
-                    setInterval(rotateTweets, timeout);
+					//Rotate tweets at specified interval
+					setInterval(rotateTweets, timeout);
 				}		
-				defaults.onComplete(tweetList);
-            });
-        });
-    }
+				opts.onComplete(tweetList);
+			});
+		});
+	};
+
+	// Define plugin defaults
+	$.fn.tweetable.options = {
+		limit: 5,                       // Number of tweets to show
+		username: 'philipbeel',         // @username tweets to display
+		time: false,                    // Display date
+		rotate: false,                  // Rotate tweets
+		speed: 5000,                    // Speed of rotation
+		replies: false,                 // Filter out @replys
+		position: 'append',             // Append position
+		failed: "No tweets available",  // Twitter stream unavailable text
+		html5: false,                   // HTML5 Support
+		retweets: false,                // Show retweets
+		onComplete: function($ul) {}    // On complete callback
+	};
+
 })(jQuery);
