@@ -5,7 +5,7 @@ GitHub  : https://github.com/philipbeel/Tweetable<br/>
 Demo    : http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.7/demo/index.html<br/>
 Website : http://theodin.co.uk<br/>
 Email   : contact@theodin.co.uk<br/>
-Twitter : @philipbeel<br/>
+Twitter : [@philipbeel](https://twitter.com/philipbeel)<br/>
 
 ### Descrpition
 Tweetable is a lightweight jQuery plugin that enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys as well as links being dynamically generated for ease of use.
@@ -36,17 +36,29 @@ Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for 
 
 ### Plugin parameters
 
->limit: {Iteger},            // Number of tweets to show <br/>
->username: {String},     	 // @username tweets to display <br/>
->time: {Boolean},            // Display date <br/>
->retweets: {Boolean},        // Discount retweets false<br/>
->replies: {Boolean},         // Filter out @replys if true <br/>
->failed: {String}			 // Text to display when API returns no results <br/>
->rotate: {Boolean}			 // Displays only one tweet at a time <br/>
->speed: {Iteger}		     // Speed in milliseconds to display each tweet if rotating <br/>
->append: {String}			 // Appended position <br/>
->HTML5: {Boolean}			 // Confirm if HTML5 is supported (timeago support) <br/>
->onComplete: {Object}		 // Function callback after event triggered <br/>
+	limit: {Iteger},            // Number of tweets to show
+	username: {String},     	 // @username tweets to display
+	time: {Boolean},            // Display date
+	retweets: {Boolean},        // Discount retweets false
+	replies: {Boolean},         // Filter out @replys if true
+	failed: {String}			 // Text to display when API returns no results
+	rotate: {Boolean}			 // Displays only one tweet at a time
+	speed: {Iteger}		     // Speed in milliseconds to display each tweet if rotating
+	append: {String}			 // Appended position
+	HTML5: {Boolean}			 // Confirm if HTML5 is supported (timeago support)
+	onComplete: {Object}		 // Function callback after event triggered
+
+### Changelog
+
+#### 1.7.0 
+* Added Qunit test coverage
+* Refactored plugin architecture 
+* Added override for plugin defaults object
+
+#### 1.6.0
+* Added Qunit test coverage
+* Added timeago plugin support
+* Optimsied variable declerations
 
 
 
