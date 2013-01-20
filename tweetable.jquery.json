@@ -1,0 +1,34 @@
+{
+	"name": "tweetable",
+	"title": "jQuery twitter feed plugin",
+	"description": "Tweetable is a lightweight jQuery plugin which enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys as well as links being dynamically generated for ease of use.",
+	"keywords": [
+		"twitter",
+		"feed"
+	],
+	"version": "1.7.0",
+	"author": {
+		"name": "Philip Beel",
+		"url": "https://github.com/philipbeel"
+	},
+	"maintainers": [
+		{
+			"name": "Corey Frang",
+			"email": "gnarf37@gmail.com",
+			"url": "http://gnarf.net"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/jquery/jquery-color/blob/2.1.2/MIT-LICENSE.txt"
+		}
+	],
+	"bugs": "https://github.com/jquery/jquery-color/issues",
+	"homepage": "https://github.com/jquery/jquery-color",
+	"docs": "https://github.com/jquery/jquery-color",
+	"download": "http://code.jquery.com/#color",
+	"dependencies": {
+		"jquery": ">=1.5"
+	}
+}
