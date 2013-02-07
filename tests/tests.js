@@ -4,7 +4,7 @@
  *
  */
 
-module("Default plugin parameters");
+module("Defaults");
 test( "Tweetable plugin parameters", function(){
 
 	ok($.fn.tweetable.options, "options set up correctly");
@@ -46,7 +46,7 @@ test( "Tweetable plugin parameters", function(){
 
 });
 
-module("Override plugin parameters");
+module("Overrides");
 test( "Tweetable parameter overrides", function(){
 
 	$.fn.tweetable.options.username = "johndoe";
@@ -87,21 +87,44 @@ test( "Tweetable parameter overrides", function(){
 });
 
 
+module("API");
+asyncTest("API response values", function() {
+	jQuery.getJSON("http://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&suppress_response_codes=true&screen_name=" + $.fn.tweetable.options.username + "&callback=?", function(data){
+		start();
 
+		ok(data, "API sent response");
+		
+		ok(data.length, "response objects present");
 
+		ok(data[0].text, "Tweet text available");
 
+		ok(data[0].created_at, "Timestamp was retunred for tweet");
+	});
+});
 
+module("Rendering");
+test("Tweetable rendered to DOM", function() {
+	$('#qunit').tweetable({
+		username: 'philipbeel', 
+		time: true,
+		rotate: false,
+		speed: 4000, 
+		limit: 5,
+		replies: false,
+		position: 'append',
+		failed: "Sorry, twitter is currently unavailable for this user.",
+		html5: true
+	});
+	stop();
+	setTimeout(function() {
+		ok( $(".tweetList"), "Tweet list was generated");
+		
+		ok( $(".tweetList").find('li'), "Tweet list items generated");
 
+		ok( $(".tweet_link_0"), "Tweet list links generated");
 
+		ok( $(".timestamp"), "Timestamps were generated");
 
-
-
-
-
-
-
-
-
-
-
-
+		start();
+	}, 500 );
+});
