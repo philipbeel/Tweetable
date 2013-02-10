@@ -7,6 +7,8 @@ Website : http://theodin.co.uk<br/>
 Email   : contact@theodin.co.uk<br/>
 Twitter : [@philipbeel](https://twitter.com/philipbeel)<br/>
 
+**Unfotunatley, due to the introduction of OAuth in the Twitter API version 1.1 this plugin will be depricated as of March 2013.**
+
 ### Descrpition
 Tweetable is a lightweight jQuery plugin that enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys as well as links being dynamically generated for ease of use.
 
