@@ -7,8 +7,6 @@ Website : http://theodin.co.uk<br/>
 Email   : contact@theodin.co.uk<br/>
 Twitter : [@philipbeel](https://twitter.com/philipbeel)<br/>
 
-**Unfortunately, due to the introduction of OAuth in the Twitter API version 1.1 this plugin will be deprecated as of March 2013.**
-
 ### Description
 Tweetable is a lightweight jQuery plugin that enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys as well as links being dynamically generated for ease of use.
 
@@ -39,18 +37,21 @@ Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for 
 ### Plugin parameters
 
 	limit: {Iteger},            // Number of tweets to show
-	username: {String},     	 // @username tweets to display
+	username: {String},     	// @username tweets to display
 	time: {Boolean},            // Display date
 	retweets: {Boolean},        // Discount retweets false
 	replies: {Boolean},         // Filter out @replies if true
-	failed: {String}			 // Text to display when API returns no results
-	rotate: {Boolean}			 // Displays only one tweet at a time
-	speed: {Iteger}		     // Speed in milliseconds to display each tweet if rotating
-	append: {String}			 // Appended position
-	HTML5: {Boolean}			 // Confirm if HTML5 is supported (timeago support)
-	onComplete: {Object}		 // Function callback after event triggered
+	failed: {String}			// Text to display when API returns no results
+	rotate: {Boolean}			// Displays only one tweet at a time
+	speed: {Iteger}		     	// Speed in milliseconds to display each tweet if rotating
+	append: {String}			// Appended position
+	HTML5: {Boolean}			// Confirm if HTML5 is supported (timeago support)
+	onComplete: {Object}		// Function callback after event triggered
 
 ### Changelog
+
+#### 1.7.1
+* Changed endpoint to use getmytweets.co.uk
 
 #### 1.7.0 
 * Added Qunit test coverage
