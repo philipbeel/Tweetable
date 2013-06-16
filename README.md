@@ -1,54 +1,65 @@
-Mobilizer - A jQuery plugin for mobile responsive navigation
+Tweetable - A jQuery plugin for displaying twitter feeds
 ========================================================
 
-GitHub  : https://github.com/philipbeel/Mobilizer<br/>
-Demo    : http://plugins.theodin.co.uk/jquery/mobilizer/demo/index.html<br/>
+GitHub  : https://github.com/philipbeel/Tweetable<br/>
+Demo    : http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.7/demo/index.html<br/>
 Website : http://theodin.co.uk<br/>
 Email   : contact@theodin.co.uk<br/>
 Twitter : [@philipbeel](https://twitter.com/philipbeel)<br/>
 
-### Descrpition
-Mobilizer is a responsive navigation jQuery plugin, it uses a combination of CSS3 and Javascript to implement the 'drawer' navigation design pattern. Try out the demo by resizing your demo to less than 600px and watch the navigation.
+**Unfortunately, due to the introduction of OAuth in the Twitter API version 1.1 this plugin will be deprecated as of March 2013.**
+
+### Description
+Tweetable is a lightweight jQuery plugin that enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys as well as links being dynamically generated for ease of use.
 
 ### Usage
-Call in the jQuery framework and jquery.mobilizer.js in your webpage
+Call in the jQuery framework and jquery.tweetable.js in your webpage
 
-	<script type="text/javascript" src="jquery.mobilizer.js"></script>
+	<script type="text/javascript" src="jquery.tweetable.js"></script>
 
-Create the navigation element on your page.
+Create an element on your page that you want to call your twitter feed into.
 
-	<nav id="primary-navigation" class="primary-navigation clearfix">
-		<ul class="clearfix">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Portfolio</a></li>
-			<li><a href="#">Clients</a></li>
-			<li><a href="#">Articles</a></li>
-			<li><a href="#">Contact</a></li>
-		</ul>
-	</nav>
+	<div id="tweets"></div>
 
-Initiate mobilizer on your selected navigation element, pass in the mobilizer responsive width copnstraint.
+Initiate tweetable on your selected element, pass in the twitter username.
 
-	$("#primary-navigation").mobilizer({
-		width: 600,
-		navigationControllerId: "mobile-navigaiton-controller"
+	$('#tweets').tweetable({username: 'philipbeel'});
+
+### TimeAgo plugin support
+Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for displaying how long ago a tweet was posted. This can be achieved like so:
+
+	$('#tweets').tweetable({
+		html5: true,
+		onComplete:function($ul){
+			$('time').timeago();
+		}
 	});
-
 
 
 ### Plugin parameters
 
-	width: {Iteger},            		// Responsive threshold for mobile nav to display
-	navigationControllerId: {String}   // The ID for the responsive navigation controller
-
+	limit: {Iteger},            // Number of tweets to show
+	username: {String},     	 // @username tweets to display
+	time: {Boolean},            // Display date
+	retweets: {Boolean},        // Discount retweets false
+	replies: {Boolean},         // Filter out @replies if true
+	failed: {String}			 // Text to display when API returns no results
+	rotate: {Boolean}			 // Displays only one tweet at a time
+	speed: {Iteger}		     // Speed in milliseconds to display each tweet if rotating
+	append: {String}			 // Appended position
+	HTML5: {Boolean}			 // Confirm if HTML5 is supported (timeago support)
+	onComplete: {Object}		 // Function callback after event triggered
 
 ### Changelog
 
-#### 0.0.1 
-* First iteration
+#### 1.7.0 
+* Added Qunit test coverage
+* Refactored plugin architecture 
+* Added override for plugin defaults object
 
-
-
+#### 1.6.0
+* Added Qunit test coverage
+* Added timeago plugin support
+* Optimized variable declarations
 
 
