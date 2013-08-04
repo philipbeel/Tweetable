@@ -6,7 +6,7 @@
 		"twitter",
 		"feed"
 	],
-	"version": "1.7.0",
+	"version": "2.0",
 	"author": {
 		"name": "Philip Beel",
 		"url": "https://github.com/philipbeel"
@@ -23,6 +23,6 @@
 	"demo": "http://plugins.theodin.co.uk/jquery/tweetable/tweetable.1.6/index.html",
 	"download": "https://github.com/philipbeel/Tweetable",
 	"dependencies": {
-		"jquery": ">=1.4"
+		"jquery": ">=1.5"
 	}
 }

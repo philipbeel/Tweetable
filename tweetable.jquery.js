@@ -1,5 +1,5 @@
 /*
- * tweetable 1.7.1 - jQuery twitter feed plugin
+ * tweetable 2.0 - jQuery twitter feed plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
@@ -11,25 +11,32 @@
  *
  */
 (function($) {
-
+	
 	jQuery.fn.tweetable = function (opts) {
 		opts = $.extend({}, $.fn.tweetable.options, opts);
-
+		
 		return this.each(function () {
 
 			var act = jQuery(this)
 			,   tweetList = jQuery('<ul class="tweetList">')[opts.position.toLowerCase() + 'To'](act)
 			,   shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-			,	 api = "http://api.getmytweets.co.uk/?screenname="
+			,	api = "http://api.getmytweets.co.uk/?screenname="
 			,   limitcount = "&limit="
+			,	callback = "&callback=?"
 			,   twitterError
 			,   tweetMonth
 			,   tweetMonthInt
 			,   iterate
 			,   element;
 
+			// Show a loading message
+			tweetList.append('<p id="tweet_loader">'+ opts.loading +'</p>');
+
 			// Fire JSON request to twitter API
-			jQuery.getJSON(api + opts.username + limitcount + opts.limit, act, function (data) {
+			jQuery.getJSON(api + opts.username + limitcount + opts.limit + callback).done(function(data) 
+			{
+				// Hide the tweet loader in favour of the response
+				jQuery("#tweet_loader").remove();
 
 				// Check for response error 
 				twitterError = data && data.error || null;
@@ -92,6 +99,14 @@
 					setInterval(rotateTweets, timeout);
 				}		
 				opts.onComplete(tweetList);
+
+			// Catch any failure to launch
+			}).fail(function( jqxhr, textStatus, error ) {
+				// Hide the tweet loader in favour of the response
+				jQuery("#tweet_loader").remove();
+
+				tweetList.append('<li class="tweet_content item"><p class="tweet_link">'+ opts.failed +'</p></li>');
+				return;
 			});
 		});
 	};
@@ -106,9 +121,11 @@
 		replies: false,                 // Filter out @replys
 		position: 'append',             // Append position
 		failed: "No tweets available",  // Twitter stream unavailable text
+		loading: "Loading tweets...",	// Tweets loading message
 		html5: false,                   // HTML5 Support
 		retweets: false,                // Show retweets
 		onComplete: function($ul) {}    // On complete callback
 	};
 
 })(jQuery);
+jQuery.support.cors = true;

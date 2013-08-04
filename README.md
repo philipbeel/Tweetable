@@ -8,7 +8,12 @@ Email   : contact@theodin.co.uk<br/>
 Twitter : [@philipbeel](https://twitter.com/philipbeel)<br/>
 
 ### Description
-Tweetable is a lightweight jQuery plugin that enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys as well as links being dynamically generated for ease of use.
+Tweetable is a lightweight jQuery plugin that enables you to display your twitter feed on your site quickly and easily. More than just displaying the feeds you can highlight @replys 
+as well as links being dynamically generated for ease of use.
+
+### IE Usage
+Please note that IE is no longer supprted by this plugin.
+
 
 ### Usage
 Call in the jQuery framework and jquery.tweetable.js in your webpage
@@ -45,10 +50,16 @@ Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for 
 	rotate: {Boolean}			// Displays only one tweet at a time
 	speed: {Iteger}		     	// Speed in milliseconds to display each tweet if rotating
 	append: {String}			// Appended position
+	loading: {String}			// Loading tweets text
 	HTML5: {Boolean}			// Confirm if HTML5 is supported (timeago support)
 	onComplete: {Object}		// Function callback after event triggered
 
 ### Changelog
+
+#### 2.0
+* Added suppot for jQuery 1.8 getJSON promise interface
+* Depreciated IE support
+* Added loading message support
 
 #### 1.7.1
 * Changed endpoint to use getmytweets.co.uk
