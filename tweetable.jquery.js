@@ -33,7 +33,7 @@
 			tweetList.append('<p id="tweet_loader">'+ opts.loading +'</p>');
 
 			// Fire JSON request to twitter API
-			jQuery.getJSON(api + opts.username + limitcount + opts.limit + callback).done(function(data) 
+			jQuery.getJSON(api + opts.username + limitcount + opts.limit).done(function(data) 
 			{
 				// Hide the tweet loader in favour of the response
 				jQuery("#tweet_loader").remove();
