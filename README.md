@@ -12,7 +12,7 @@ Tweetable is a lightweight jQuery plugin that enables you to display your twitte
 as well as links being dynamically generated for ease of use.
 
 ### IE Usage
-Please note that IE is no longer supprted by this plugin.
+Please note that IE is no longer supported by this plugin.
 
 
 ### Usage
