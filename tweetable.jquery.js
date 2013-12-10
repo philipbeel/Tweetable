@@ -1,5 +1,5 @@
 /*
- * tweetable 2.0 - jQuery twitter feed plugin
+ * tweetable 2.1 - jQuery twitter feed plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
@@ -7,48 +7,10 @@
  *
  * With modifications from Philipp Robbel (http://www.robbel.com/) & Patrick DW (stackoverflow)
  *
- * Revision: $Id: jquery.tweetable.js 2013-06-16 $ 
+ * Revision: $Id: jquery.tweetable.js 2013-12-10 $ 
  *
  */
 (function($) {
-
-	getTweetFromLocalStorage = function (cacheTimeInMilliseconds)
-	{
-		if(window.localStorage)
-		{
-			var response = JSON.parse(localStorage.getItem("key"));
-			var timestampWhenStored = response && response.timestamp || null;
-
-			if(TweetHasExpired(timestampWhenStored, cacheTimeInMilliseconds))
-			{
-				return false;
-			}
-		}
-	};
-
-	hasTweetExpired = function (storedTimeInMilliseconds, expiryTimeInMilliseconds)
-	{
-		return (storedTimeInMilliseconds <= (new Date().getTime() - expiryTimeInMilliseconds));
-	};
-
-	destroyTweetInLocalStorage = function (name)
-	{
-		localStorage.removeItem(name);
-	};
-
-	setTweetInLocalStorage = function (tweet, time)
-	{
-		var storageName = tweetableTweet
-		if(window.localStorage)
-		{
-			var value = {
-				value:tweet, 
-				timestamp: new Date().getTime()
-			};
-
-			localStorage.storeItem("tweetable", JSON.stringify(value));
-		}
-	};
 
 	jQuery.fn.tweetable = function (opts) {
 		opts = $.extend({}, $.fn.tweetable.options, opts);
@@ -61,106 +23,193 @@
 			var api = "http://api.getmytweets.co.uk/?screenname=";
 			var limitcount = "&limit=";
 			var callback = "&callback=?";
-			var twitterError;
 			var tweetMonth;
 			var tweetMonthInt;
-			var iterate;
 			var element;
 			var latestTweet;
 
-			// Before we do anything check if we have the tweet and what it was stored as
-			
-			// Does the browser support localStorage
-			
-			//Do we have a tweet stored
-			
-			// Has the time expired, store this as part of the object
-			
-			var latestTweet = getTweetFromLocalStorage(opts.cacheInMilliseconds);
-
-			// There is no previously stored tweet, so request one. 
-			if(!latestTweet)
+			// Return a boolean with the value of the tweets
+			function hasValidCachedTweets ()
 			{
-				// Show a loading message
-				tweetList.append('<p id="tweet_loader">'+ opts.loading +'</p>');
-
-				// Fire JSON request to twitter API
-				jQuery.getJSON(api + opts.username + limitcount + opts.limit).done(function(data) 
+				if(window.localStorage)
 				{
-					// Hide the tweet loader in favour of the response
-					jQuery("#tweet_loader").remove();
-
-					// Check for response error 
-					twitterError = data && data.error || null;
-
-					if(twitterError)
+					var response = JSON.parse(localStorage.getItem("tweetable"));
+					if(!response)
 					{
-						tweetList.append('<li class="tweet_content item"><p class="tweet_link">'+ opts.failed +'</p></li>');
+						return false;
+					}
+
+					var timestampWhenStored = response && response.timestamp || 0;
+
+					return tweetHasExpired(timestampWhenStored, opts.cacheInMilliseconds);
+				}
+			};
+
+			function getCachedTweets (cacheTimeInMilliseconds)
+			{
+				if(window.localStorage)
+				{
+					var response = JSON.parse(localStorage.getItem("tweetable"));
+
+					return response.value;
+				}
+			};
+
+			function tweetHasExpired (storedTimeInMilliseconds, expiryTimeInMilliseconds)
+			{
+				var currentTime = new Date().getTime();
+				return ((currentTime - expiryTimeInMilliseconds) <= storedTimeInMilliseconds);
+			};
+
+			function destroyTweetInLocalStorage (name)
+			{
+				localStorage.removeItem(name);
+			};
+
+			function storeTweetsInLocalCache (response)
+			{
+				if(window.localStorage)
+				{
+					var value = {
+						value:response,
+						timestamp: new Date().getTime()
+					};
+
+					localStorage.setItem("tweetable", JSON.stringify(value));
+				}
+			};
+
+			function hideLoadingMessage ()
+			{
+				jQuery("#tweet_loader").remove();
+			};
+
+			function showLoadingMessage ()
+			{
+				tweetList.append('<p id="tweet_loader">'+ opts.loading +'</p>');
+			};
+
+			function displayErrorMessage ()
+			{
+				tweetList.append('<li class="tweet_content item"><p class="tweet_link">'+ opts.failed +'</p></li>');
+			};
+
+			function appendTweetToList (i, tweet)
+			{
+				tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweet.response.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2').replace(/:">/, ' ">').replace(/: <\/a>/, '</a>:') + '</p></li>');
+			};
+
+			function encounteredError (data)
+			{
+				return data && data.error || null;
+			}
+
+			function displayTimeOfTweet (i, tweet)
+			{
+				var iso8601;
+				var i;
+				for(i=0; i<=12; i++) {
+					if(shortMonths[i] === tweet.tweet_date.substr(4, 3)) {
+						tweetMonthInt = i++;
+						tweetMonth = (tweetMonthInt <= 9) ? '0' + tweetMonthInt : tweetMonthInt ;
+					}
+				}
+				
+				// Create ISO 8601 formatted date
+				iso8601 = tweet.tweet_date.substr(26,4) + '-' + tweetMonth + '-' + tweet.tweet_date.substr(8, 2) + 'T' + tweet.tweet_date.substr(11,8) + 'Z';  
+
+				jQuery('.tweet_link_' + i).append('<p class="timestamp"><'
+					+ ((opts.html5) ? 'time datetime="' + iso8601 + '"' : 'small') 
+					+ '> ' + tweet.tweet_date.substr(8, 2) + '/' + tweetMonth + '/' + tweet.tweet_date.substr(26,4) + ', ' + tweet.tweet_date.substr(11,5) + '</' 
+					+ ((opts.html5) ? 'time' : 'small') + 
+					'></p>');
+			};
+
+			function displayTweetsOnRotation ()
+			{
+				var listItem = tweetList.find('li')
+				var listLength = listItem.length || null;
+				var current = 0;
+				var timeout = opts.speed;
+
+				if(!listLength)
+				{
+					return;
+				}
+
+				function rotateTweets()
+				{
+					listItem.eq(current++).fadeOut(400, function ()
+						{
+							current = (current === listLength) ? 0 : current;
+							listItem.eq(current).fadeIn(400);
+						});
+				}
+				//Hide all but the first tweet
+				listItem.slice(1).hide();
+
+				//Rotate tweets at specified interval
+				setInterval(rotateTweets, timeout);
+			};
+
+			function displayTweets(data)
+			{
+					if(encounteredError(data))
+					{
+						displayErrorMessage();
 						return;
+					} 
+					else
+					{
+						storeTweetsInLocalCache(data);
 					}
 
 					// Loop through twitter API response
-					jQuery.each(data.tweets, function (i, tweet) {
-
-						// Output tweets if less than limit
-						if(i >= opts.limit)
-							return;
-
-						tweetList.append('<li class="tweet_content_' + i + '"><p class="tweet_link_' + i + '">' + tweet.response.replace(/#(.*?)(\s|$)/g, '<span class="hash">#$1 </span>').replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, '<a href="$&">$&</a> ').replace(/@(.*?)(\s|\(|\)|$)/g, '<a href="http://twitter.com/$1">@$1 </a>$2').replace(/:">/, ' ">').replace(/: <\/a>/, '</a>:') + '</p></li>');
-						
-						// Display the time of tweet if required
-						if (opts.time === true) {
-							for(iterate=0; iterate<=12; iterate++) {
-								if(shortMonths[iterate] === tweet.tweet_date.substr(4, 3)) {
-									tweetMonthInt = iterate + 1;
-									tweetMonth = (tweetMonthInt < 10) ? '0' + tweetMonthInt : tweetMonthInt ;
-								}
+					jQuery.each(data, function (i, tweet)
+						{
+							if(i >= opts.limit)
+							{
+								return;
 							}
-							// Create ISO 8601 formatted date
-							var iso8601 = tweet.tweet_date.substr(26,4) + '-' + tweetMonth + '-' + tweet.tweet_date.substr(8, 2) + 'T' + tweet.tweet_date.substr(11,8) + 'Z';  
-							jQuery('.tweet_link_' + i).append('<p class="timestamp"><'
-								+ ((opts.html5) ? 'time datetime="' + iso8601 + '"' : 'small') 
-								+ '> ' + tweet.tweet_date.substr(8, 2) + '/' + tweetMonth + '/' + tweet.tweet_date.substr(26,4) + ', ' + tweet.tweet_date.substr(11,5) + '</' 
-								+ ((opts.html5) ? 'time' : 'small') + 
-								'></p>');
-						}
+
+							appendTweetToList(i, tweet);
+
+							if (opts.time === true) 
+							{
+								displayTimeOfTweet(i, tweet);
+							}
+						});
+
+					if ( opts.rotate === true )
+					{
+						displayTweetsOnRotation();
+					}
+
+					opts.onComplete(tweetList);				
+			};
+
+			
+			if(hasValidCachedTweets())
+			{
+				var data = getCachedTweets();
+				displayTweets(data);
+			}
+			else
+			{
+				showLoadingMessage();
+
+				jQuery.getJSON(api + opts.username + limitcount + opts.limit).done(function (data) 
+					{
+						hideLoadingMessage();
+						displayTweets(data.tweets);
+
+					}).fail(function ( jqxhr, textStatus, error )
+					{
+						hideLoadingMessage();
+
+						displayErrorMessage();
+						return;
 					});
-
-					// Display one tweet and retweet
-					if ( opts.rotate === true ) {
-
-						var listItem = tweetList.find('li')
-						,   listLength = listItem.length || null
-						,   current = 0
-						,   timeout = opts.speed;	
-
-						if(!listLength)
-							return
-
-						// Rotate the tweets one at a time
-						function rotateTweets() {
-						   listItem.eq(current++).fadeOut(400, function(){
-								current = (current === listLength) ? 0 : current;
-								listItem.eq(current).fadeIn(400);
-						   });
-						}
-						//Hide all but the first tweet
-						listItem.slice(1).hide();
-
-						//Rotate tweets at specified interval
-						setInterval(rotateTweets, timeout);
-					}		
-					opts.onComplete(tweetList);
-
-				// Catch any failure to launch
-				}).fail(function( jqxhr, textStatus, error ) {
-					// Hide the tweet loader in favour of the response
-					jQuery("#tweet_loader").remove();
-
-					tweetList.append('<li class="tweet_content item"><p class="tweet_link">'+ opts.failed +'</p></li>');
-					return;
-				});
-
 			}
 		});
 	};

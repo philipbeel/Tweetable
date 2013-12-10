@@ -41,20 +41,25 @@ Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for 
 
 ### Plugin parameters
 
-	limit: {Iteger},            // Number of tweets to show
-	username: {String},     	// @username tweets to display
-	time: {Boolean},            // Display date
-	retweets: {Boolean},        // Discount retweets false
-	replies: {Boolean},         // Filter out @replies if true
-	failed: {String}			// Text to display when API returns no results
-	rotate: {Boolean}			// Displays only one tweet at a time
-	speed: {Iteger}		     	// Speed in milliseconds to display each tweet if rotating
-	append: {String}			// Appended position
-	loading: {String}			// Loading tweets text
-	HTML5: {Boolean}			// Confirm if HTML5 is supported (timeago support)
-	onComplete: {Object}		// Function callback after event triggered
+	limit: {Integer},           	// Number of tweets to show
+	username: {String},     		// @username tweets to display
+	time: {Boolean},            	// Display date
+	retweets: {Boolean},        	// Discount retweets false
+	replies: {Boolean},         	// Filter out @replies if true
+	failed: {String}				// Text to display when API returns no results
+	rotate: {Boolean}				// Displays only one tweet at a time
+	speed: {Integer}		     	// Speed in milliseconds to display each tweet if rotating
+	append: {String}				// Appended position
+	loading: {String}				// Loading tweets text
+	HTML5: {Boolean}				// Confirm if HTML5 is supported (timeago support)
+	cacheInMilliseconds {Integer}	// Time to keep the most recent tweets in cache before requesting new ones
+	onComplete: {Object}			// Function callback after event triggered
 
 ### Changelog
+
+#### 2.1
+* Added caching for improved performance
+* Made code more moduler
 
 #### 2.0
 * Added suppot for jQuery 1.8 getJSON promise interface
