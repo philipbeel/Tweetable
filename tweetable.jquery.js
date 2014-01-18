@@ -1,5 +1,5 @@
 /*
- * tweetable 2.1 - jQuery twitter feed plugin
+ * tweetable 2.1.1 - jQuery twitter feed plugin
  *
  * Copyright (c) 2009 Philip Beel (http://www.theodin.co.uk/)
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
@@ -7,14 +7,14 @@
  *
  * With modifications from Philipp Robbel (http://www.robbel.com/) & Patrick DW (stackoverflow)
  *
- * Revision: $Id: jquery.tweetable.js 2013-12-10 $ 
+ * Revision: $Id: jquery.tweetable.js 2013-12-10 $
  *
  */
 (function($) {
 
 	jQuery.fn.tweetable = function (opts) {
 		opts = $.extend({}, $.fn.tweetable.options, opts);
-		
+
 		return this.each(function () {
 
 			var act = jQuery(this);
@@ -107,21 +107,21 @@
 			function displayTimeOfTweet (i, tweet)
 			{
 				var iso8601;
-				var i;
-				for(i=0; i<=12; i++) {
-					if(shortMonths[i] === tweet.tweet_date.substr(4, 3)) {
-						tweetMonthInt = i++;
+				var n;
+				for(n=0; n<=12; n++) {
+					if(shortMonths[n] === tweet.tweet_date.substr(4, 3)) {
+						tweetMonthInt = n++;
 						tweetMonth = (tweetMonthInt <= 9) ? '0' + tweetMonthInt : tweetMonthInt ;
 					}
 				}
-				
+
 				// Create ISO 8601 formatted date
-				iso8601 = tweet.tweet_date.substr(26,4) + '-' + tweetMonth + '-' + tweet.tweet_date.substr(8, 2) + 'T' + tweet.tweet_date.substr(11,8) + 'Z';  
+				iso8601 = tweet.tweet_date.substr(26,4) + '-' + tweetMonth + '-' + tweet.tweet_date.substr(8, 2) + 'T' + tweet.tweet_date.substr(11,8) + 'Z';
 
 				jQuery('.tweet_link_' + i).append('<p class="timestamp"><'
-					+ ((opts.html5) ? 'time datetime="' + iso8601 + '"' : 'small') 
-					+ '> ' + tweet.tweet_date.substr(8, 2) + '/' + tweetMonth + '/' + tweet.tweet_date.substr(26,4) + ', ' + tweet.tweet_date.substr(11,5) + '</' 
-					+ ((opts.html5) ? 'time' : 'small') + 
+					+ ((opts.html5) ? 'time datetime="' + iso8601 + '"' : 'small')
+					+ '> ' + tweet.tweet_date.substr(8, 2) + '/' + tweetMonth + '/' + tweet.tweet_date.substr(26,4) + ', ' + tweet.tweet_date.substr(11,5) + '</'
+					+ ((opts.html5) ? 'time' : 'small') +
 					'></p>');
 			};
 
@@ -158,7 +158,7 @@
 					{
 						displayErrorMessage();
 						return;
-					} 
+					}
 					else
 					{
 						storeTweetsInLocalCache(data);
@@ -174,7 +174,7 @@
 
 							appendTweetToList(i, tweet);
 
-							if (opts.time === true) 
+							if (opts.time === true)
 							{
 								displayTimeOfTweet(i, tweet);
 							}
@@ -185,10 +185,10 @@
 						displayTweetsOnRotation();
 					}
 
-					opts.onComplete(tweetList);				
+					opts.onComplete(tweetList);
 			};
 
-			
+
 			if(hasValidCachedTweets())
 			{
 				var data = getCachedTweets();
@@ -198,7 +198,7 @@
 			{
 				showLoadingMessage();
 
-				jQuery.getJSON(api + opts.username + limitcount + opts.limit).done(function (data) 
+				jQuery.getJSON(api + opts.username + limitcount + opts.limit).done(function (data)
 					{
 						hideLoadingMessage();
 						displayTweets(data.tweets);
@@ -227,7 +227,7 @@
 		loading: "Loading tweets...",	// Tweets loading message
 		html5: false,                   // HTML5 Support
 		retweets: false,                // Show retweets
-		cacheInMilliseconds: 3600000,   // The time to cache a tweet in milliseconds  
+		cacheInMilliseconds: 3600000,   // The time to cache a tweet in milliseconds
 		onComplete: function($ul) {}    // On complete callback
 	};
 
