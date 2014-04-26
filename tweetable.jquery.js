@@ -16,7 +16,7 @@
 		opts = $.extend({}, $.fn.tweetable.options, opts);
 
 		return this.each(function () {
-
+		
 			var act = jQuery(this);
 			var tweetList = jQuery('<ul class="tweetList">')[opts.position.toLowerCase() + 'To'](act);
 			var shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -33,7 +33,7 @@
 			{
 				if(window.localStorage)
 				{
-					var response = JSON.parse(localStorage.getItem("tweetable"));
+					var response = JSON.parse(localStorage.getItem("tweetable_"+opts.username));
 					if(!response)
 					{
 						return false;
@@ -49,7 +49,7 @@
 			{
 				if(window.localStorage)
 				{
-					var response = JSON.parse(localStorage.getItem("tweetable"));
+					var response = JSON.parse(localStorage.getItem("tweetable_"+opts.username));
 
 					return response.value;
 				}
@@ -75,7 +75,7 @@
 						timestamp: new Date().getTime()
 					};
 
-					localStorage.setItem("tweetable", JSON.stringify(value));
+					localStorage.setItem("tweetable_"+opts.username, JSON.stringify(value));
 				}
 			};
 
@@ -110,7 +110,7 @@
 				var n;
 				for(n=0; n<=12; n++) {
 					if(shortMonths[n] === tweet.tweet_date.substr(4, 3)) {
-						tweetMonthInt = n++;
+						tweetMonthInt = n+1;
 						tweetMonth = (tweetMonthInt <= 9) ? '0' + tweetMonthInt : tweetMonthInt ;
 					}
 				}
