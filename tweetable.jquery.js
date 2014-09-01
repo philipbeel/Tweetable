@@ -15,12 +15,13 @@
 	jQuery.fn.tweetable = function (opts) {
 		opts = $.extend({}, $.fn.tweetable.options, opts);
 
-		return this.each(function () {
-
+		return this.each(function () 
+		{
 			var act = jQuery(this);
 			var tweetList = jQuery('<ul class="tweetList">')[opts.position.toLowerCase() + 'To'](act);
 			var shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-			var api = "http://api.getmytweets.co.uk/?screenname=";
+			// var api = "http://api.getmytweets.co.uk/?screenname=";
+			var api = "http://plugins.theodin.co.uk/tweetable/statuses/?screen_name=";
 			var limitcount = "&limit=";
 			var callback = "&callback=?";
 			var tweetMonth;
@@ -198,7 +199,8 @@
 			{
 				showLoadingMessage();
 
-				jQuery.getJSON(api + opts.username + limitcount + opts.limit).done(function (data)
+				jQuery.getJSON(api + opts.username + limitcount + opts.limit + callback)
+					.done(function (data)
 					{
 						hideLoadingMessage();
 						displayTweets(data.tweets);

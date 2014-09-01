@@ -2,7 +2,7 @@ Tweetable - A jQuery plugin for displaying twitter feeds
 ========================================================
 
 GitHub  : https://github.com/philipbeel/Tweetable<br/>
-Demo    : http://plugins.theodin.co.uk/jquery/tweetable/demo/index.html<br/>
+Demo    : http://plugins.theodin.co.uk/tweetable/demo/<br/>
 Website : http://theodin.co.uk<br/>
 Email   : contact@theodin.co.uk<br/>
 Twitter : [@philipbeel](https://twitter.com/philipbeel)<br/>
