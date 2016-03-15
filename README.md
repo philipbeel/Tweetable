@@ -55,7 +55,17 @@ Tweetable also supports [timeago](https://github.com/rmm5t/jquery-timeago). for 
 	cacheInMilliseconds {Integer}	// Time to keep the most recent tweets in cache before requesting new ones
 	onComplete: {Object}			// Function callback after event triggered
 
+To get CONSUMER KEY, CONSUMER SECRET, and access Tokens, you must create an app in your twitter account
+
+https://apps.twitter.com/
+
+Requeriments: Abraham's TwitterOauth, you can download in:
+https://twitteroauth.com/
+
+
 ### Changelog
+#### 2.2
+* Added API for remote twitter
 
 #### 2.1
 * Added caching for improved performance
