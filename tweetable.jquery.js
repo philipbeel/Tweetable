@@ -21,7 +21,7 @@
 			var tweetList = jQuery('<ul class="tweetList">')[opts.position.toLowerCase() + 'To'](act);
 			var shortMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 			// var api = "http://api.getmytweets.co.uk/?screenname=";
-			var api = "http://plugins.theodin.co.uk/tweetable/statuses/?screen_name=";
+			var api = "index.php?screen_name=";
 			var limitcount = "&limit=";
 			var callback = "&callback=?";
 			var tweetMonth;
