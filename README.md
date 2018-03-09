@@ -1,10 +1,11 @@
+Deprecation notice
+========================================================
+This plugin was based on a now depricated version of the twitter API and is no longer maintained. This code doesn't work anymore. The original readme is below:
+
 Tweetable - A jQuery plugin for displaying twitter feeds
 ========================================================
 
-GitHub  : https://github.com/philipbeel/Tweetable<br/>
-Demo    : http://plugins.theodin.co.uk/tweetable/demo/<br/>
 Website : http://theodin.co.uk<br/>
-Email   : contact@theodin.co.uk<br/>
 Twitter : [@philipbeel](https://twitter.com/philipbeel)<br/>
 
 ### Description
